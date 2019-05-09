@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
-import { Route, Link } from 'react-router-dom';
+import { Route, Link,  } from 'react-router-dom';
 import Folder from './folder/folder'
 import Note from './note/note'
+import Content from './content/content'
+import NavBack from './navback/navback'
 import STORE from './dummy-store' 
 import './App.css';
+import { notDeepEqual } from 'assert';
 
 class App extends Component {
   state = {
@@ -11,26 +14,50 @@ class App extends Component {
   }
 
   render() {
-    const { folders } = this.state.STORE.folders
+    const { folders, notes } = this.state.STORE
 
     return (
       <div className='App'>
         <header>
           <Link to='/'>Noteful</Link>
         </header>
-        <nav className='sidebar'>
-          <Folder folders={this.state.STORE.folders} />
-          {/* <Route
-            path='/folder/:folderId'
-            render={() => {
-              return <Folder 
-                folders={this.state.STORE.folders}
+        <nav>
+          <Route
+            exact path='/'
+            render={() => <Folder folders={ folders }/>}
+          />
+          <Route
+            path='/folder'
+            render={() => <Folder folders={ folders }/>}
+          />
+          <Route
+            path='/note/:noteId'
+            render={(routeProps) =>       
+              <NavBack 
+                folders={ folders }
+                note={notes.find(note => note.id === routeProps.match.params.noteId)}
+                onClickBack={() => {routeProps.history.goBack()}}
               />
-            }}
-          /> */}
+             }
+          />
         </nav>
         <main>
-          <Note notes={this.state.STORE.notes} />
+          <Route
+            exact path='/'
+            render={() => <Note notes={ notes } />}
+          />
+          <Route
+              path='/folder/:folderId'
+              render={(routeProps) =>
+                  <Note notes={notes.filter(note => note.folderId === routeProps.match.params.folderId)}/>
+              }
+          />
+          <Route
+              path='/note/:noteId'
+              render={(routeProps) =>
+                  <Content content={notes.find(note => note.id === routeProps.match.params.noteId)}/>
+              }
+          />
         </main>      
       </div>
     )

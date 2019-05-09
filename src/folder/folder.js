@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 
 class Folder extends Component{
     static defaultProps = {
@@ -9,17 +9,20 @@ class Folder extends Component{
     render() {
         const { folders } = this.props
         return (
-        <ul className='Folder'>
-            {folders.map(folder => 
-                <li key={folder.id}>
-                    <NavLink to={`/folder/${folder.id}`}>
-                        {folder.name}
-                    </NavLink>
-                </li>
-            )}
-        </ul>
+            <>
+                <ul className='Folder'>
+                    {folders.map(folder => 
+                        <li key={folder.id}>
+                            <NavLink to={`/folder/${folder.id}`}>
+                                {folder.name}
+                            </NavLink>
+                        </li>
+                    )}
+                </ul>
+                <button>Add Folder</button>
+            </>
         )
     }
 }
 
-export default Folder
+export default withRouter(Folder)

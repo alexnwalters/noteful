@@ -6,3 +6,7 @@ header {
   height: 100px;
   border-bottom: solid black 1px;
 }
+
+ul {
+  list-style: none;
+}

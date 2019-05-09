@@ -14,11 +14,13 @@ class Note extends Component {
             <ul className='notes'>
                 {notes.map(note =>
                     <li key={note.id}>
-                        <Link to={`./note/${note.folderId}/${note.id}`}>
+                        <Link to={`/note/${note.id}`}>
                             {note.name}
-                            <br />
-                            Date modified: {note.modified}
                         </Link>
+                        <div>
+                            <p>Date modified: {note.modified}</p>
+                            <button>Delete Note</button>
+                        </div>
                     </li>
                 )}
             </ul>
