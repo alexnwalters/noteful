@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { NavLink, withRouter } from 'react-router-dom';
+import './folder.css'
 
 class Folder extends Component{
     static defaultProps = {
@@ -9,8 +10,8 @@ class Folder extends Component{
     render() {
         const { folders } = this.props
         return (
-            <>
-                <ul className='Folder'>
+            <div className='nav'>
+                <ul className='folders'>
                     {folders.map(folder => 
                         <li key={folder.id}>
                             <NavLink to={`/folder/${folder.id}`}>
@@ -20,7 +21,7 @@ class Folder extends Component{
                     )}
                 </ul>
                 <button>Add Folder</button>
-            </>
+            </div>
         )
     }
 }

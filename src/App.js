@@ -21,44 +21,49 @@ class App extends Component {
         <header>
           <Link to='/'>Noteful</Link>
         </header>
-        <nav>
-          <Route
-            exact path='/'
-            render={() => <Folder folders={ folders }/>}
-          />
-          <Route
-            path='/folder'
-            render={() => <Folder folders={ folders }/>}
-          />
-          <Route
-            path='/note/:noteId'
-            render={(routeProps) =>       
-              <NavBack 
-                folders={ folders }
-                note={notes.find(note => note.id === routeProps.match.params.noteId)}
-                onClickBack={() => {routeProps.history.goBack()}}
-              />
-             }
-          />
-        </nav>
-        <main>
-          <Route
-            exact path='/'
-            render={() => <Note notes={ notes } />}
-          />
-          <Route
-              path='/folder/:folderId'
-              render={(routeProps) =>
-                  <Note notes={notes.filter(note => note.folderId === routeProps.match.params.folderId)}/>
-              }
-          />
-          <Route
+        <div className='container'>
+          <nav className='sidebar'>
+            <Route
+              exact path='/'
+              render={() => <Folder folders={ folders }/>}
+            />
+            <Route
+              path='/folder'
+              render={() => <Folder folders={ folders }/>}
+            />
+            <Route
               path='/note/:noteId'
-              render={(routeProps) =>
-                  <Content content={notes.find(note => note.id === routeProps.match.params.noteId)}/>
+              render={(routeProps) =>       
+                <NavBack 
+                  folders={ folders }
+                  note={notes.find(note => note.id === routeProps.match.params.noteId)}
+                  onClickBack={() => {routeProps.history.goBack()}}
+                />
               }
-          />
-        </main>      
+            />
+          </nav>
+          <main className='main'>
+            <Route
+              exact path='/'
+              render={() => <Note notes={ notes } />}
+            />
+            <Route
+                path='/folder/:folderId'
+                render={(routeProps) =>
+                    <Note notes={notes.filter(note => note.folderId === routeProps.match.params.folderId)}/>
+                }
+            />
+            <Route
+                path='/note/:noteId'
+                render={(routeProps) =>
+                  <>
+                  <Note notes={notes.filter(note => note.id === routeProps.match.params.noteId)}/>
+                  <Content content={notes.find(note => note.id === routeProps.match.params.noteId)}/>
+                  </>
+                }
+            />
+          </main>
+        </div>      
       </div>
     )
   }

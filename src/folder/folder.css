@@ -1,0 +1,22 @@
+.folders li {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 2px;
+}
+
+.folders a {
+    text-decoration: none;
+    border: solid 1px black;
+    padding: 10px 0px;
+
+}
+
+.folders a.active {
+    background: skyblue;
+}
+
+.nav button {
+    background: none;
+    border: solid 1px black;
+    padding: 6px;
+}

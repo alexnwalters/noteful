@@ -3,10 +3,29 @@
 }
 
 header {
-  height: 100px;
+  padding: 40px;
   border-bottom: solid black 1px;
+  font-size: 30px;
+}
+
+.container {
+  display: flex;
+  justify-content: stretch;
+  /* padding: 10px; */
+}
+
+.sidebar {
+  width: 25%;
+  margin-right: 10px;
+  border-right: solid 1px black;
+  padding-right: 1px
+}
+
+.main {
+  flex-grow: 1;
 }
 
 ul {
   list-style: none;
+  padding: 0;
 }

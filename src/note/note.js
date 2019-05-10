@@ -17,8 +17,8 @@ class Note extends Component {
                         <Link to={`/note/${note.id}`}>
                             {note.name}
                         </Link>
-                        <div>
-                            <p>Date modified: {note.modified}</p>
+                        <div className='note-details'>
+                            <p>Modified: {note.modified}</p>
                             <button>Delete Note</button>
                         </div>
                     </li>

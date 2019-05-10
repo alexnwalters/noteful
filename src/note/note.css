@@ -1,0 +1,25 @@
+.notes li {
+    border: solid 1px black;
+    margin-bottom: 4px;
+    padding: 10px;
+    text-align: left;
+}
+
+.notes li a {
+    font-size: 20px;
+    text-decoration: none;
+}
+
+.note-details {
+    display: flex;
+    justify-content: space-between;
+}
+
+.note-details p {
+    margin-bottom: 0;
+}
+.note-details button {
+    background: none;
+    border: solid 1px black;
+    padding: 4px;
+}

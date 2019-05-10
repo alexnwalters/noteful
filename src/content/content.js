@@ -6,8 +6,6 @@ export default function Content(props) {
 
     return (
         <div className='content'>
-            <h2>{content.name}</h2>
-            <p>Modified {content.modified}</p>
             <p>{content.content}</p>
         </div>
     )

@@ -6,8 +6,8 @@ export default function NavBack(props) {
 
     return (
         <div className='folder-name'>
-            <h2>{name.name}</h2>
             <button onClick={props.onClickBack}>Back</button>
+            <h2>{name.name}</h2>
         </div>
     )
 }
