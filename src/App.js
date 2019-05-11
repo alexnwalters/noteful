@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Route, Link,  } from 'react-router-dom';
-import Folder from './folder/folder'
-import Note from './note/note'
-import Content from './content/content'
-import NavBack from './navback/navback'
-import STORE from './dummy-store' 
+import Folder from './folder/folder';
+import Note from './note/note';
+import Content from './content/content';
+import NavBack from './navback/navback';
+import STORE from './dummy-store';
 import './App.css';
-import { notDeepEqual } from 'assert';
+import NoteContext from './'
 
 class App extends Component {
   state = {
