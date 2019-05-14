@@ -1,14 +1,16 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import NoteContext from '../NoteContext'
 import './note.css';
 
 class Note extends Component {
-    static defaultProps = {
-        notes: []
-    }
+
+    static contextType = NoteContext;
 
     render() {
-        const {notes} = this.props
+        const notes = this.props.match.path === '/'
+                ? this.context.notes
+                : this.context.notes.filter(note => note.folderId === this.props.match.params.folderId)
 
         return (
             <ul className='notes'>
@@ -19,7 +21,16 @@ class Note extends Component {
                         </Link>
                         <div className='note-details'>
                             <p>Modified: {note.modified}</p>
-                            <button>Delete Note</button>
+                            <button
+                                onClick={() => {
+                                    this.context.deleteRequest(
+                                        note.id,
+                                        this.context.deleteNote
+                                    )
+                                }}
+                                >
+                                Delete Note
+                            </button>
                         </div>
                     </li>
                 )}
