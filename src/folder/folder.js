@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink, withRouter } from 'react-router-dom';
+import { NavLink, withRouter, Link } from 'react-router-dom';
 import NoteContext from '../NoteContext'
 import './folder.css'
 
@@ -20,7 +20,11 @@ class Folder extends Component{
                         </li>
                     )}
                 </ul>
-                <button>Add Folder</button>
+                <div>
+                    <Link to={'/addfolder'}>
+                        Add Folder
+                    </Link>
+                </div>
             </div>
         )
     }

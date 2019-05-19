@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import NoteContext from '../NoteContext'
-import './navback.css';
+import './foldername.css';
 
-class NavBack extends Component {
+class FolderName extends Component {
     
     static contextType = NoteContext;
 
@@ -10,7 +10,6 @@ class NavBack extends Component {
         const note = this.context.notes.find(note => note.id === this.props.match.params.noteId);
         const name = this.context.folders.find(folder => folder.id === note.folderId)
 
-        console.log(name);
         return (            
             <div className='folder-name'>
                 <button onClick={() => {this.props.history.goBack()}}>Back</button>
@@ -20,4 +19,4 @@ class NavBack extends Component {
     }
 }
 
-export default NavBack
+export default FolderName

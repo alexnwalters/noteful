@@ -13,28 +13,35 @@ class Note extends Component {
                 : this.context.notes.filter(note => note.folderId === this.props.match.params.folderId)
 
         return (
-            <ul className='notes'>
-                {notes.map(note =>
-                    <li key={note.id}>
-                        <Link to={`/note/${note.id}`}>
-                            {note.name}
-                        </Link>
-                        <div className='note-details'>
-                            <p>Modified: {note.modified}</p>
-                            <button
-                                onClick={() => {
-                                    this.context.deleteRequest(
-                                        note.id,
-                                        this.context.deleteNote
-                                    )
-                                }}
-                                >
-                                Delete Note
-                            </button>
-                        </div>
-                    </li>
-                )}
-            </ul>
+            <div>
+                <ul className='notes'>
+                    {notes.map(note =>
+                        <li key={note.id}>
+                            <Link to={`/note/${note.id}`}>
+                                {note.name}
+                            </Link>
+                            <div className='note-details'>
+                                <p>Modified: {note.modified}</p>
+                                <button
+                                    onClick={() => {
+                                        this.context.deleteRequest(
+                                            note.id,
+                                            this.context.deleteNote
+                                        )
+                                    }}
+                                    >
+                                    Delete Note
+                                </button>
+                            </div>
+                        </li>
+                    )}
+                </ul>
+                <div>
+                    <Link to={'/addnote'}>
+                        Add Note
+                    </Link>
+                </div>
+            </div>
         )
     }
 }
