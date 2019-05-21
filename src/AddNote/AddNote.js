@@ -12,7 +12,8 @@ class AddNote extends Component {
             name: '',
             content: '',
             folderId: '',
-            modified: Date()
+            modified: Date(),
+            error: null
         }
     }
 
@@ -37,7 +38,14 @@ class AddNote extends Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        const note = (({id, name, content, folderId, modified}) => ({id, name, content, folderId, modified}))(this.state);
+        const  {id, name, content, folderId, modified} = this.state;
+        const note = {
+            id, 
+            name, 
+            content, 
+            folderId, 
+            modified
+        };
 
         fetch('http://localhost:9090/notes', {
             method: 'POST',
@@ -63,14 +71,14 @@ class AddNote extends Component {
             this.context.handleAddNote(note);
             this.props.history.push('/');
         })
-        .catch(error => this.setState({ error }))
+        .catch(error => this.setState({ error: error.message }))
     }
     
     
     render() {
         const folders = this.context.folders;
         const error = this.state.error 
-          ? <div className="error">{this.state.error}</div>
+          ? <div className="error">Something went wrong: {this.state.error}</div>
           : "";
         
         return(

@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import NoteContext from '../NoteContext'
-import PropTypes from 'prop-types'
 
 class AddFolder extends Component {
 
@@ -11,6 +10,7 @@ class AddFolder extends Component {
         this.state = {
             id: this.props.location.key,
             name: '',
+            error: null
         }
     }
 
@@ -23,7 +23,11 @@ class AddFolder extends Component {
     handleSubmit(e) {
         e.preventDefault();
 
-        const folder = (({id, name}) => ({id, name}))(this.state);
+        const { id, name } = this.state;
+        const folder = { 
+            id,
+            name
+        };
         
         fetch('http://localhost:9090/folders', {
             method: 'POST',
@@ -46,13 +50,14 @@ class AddFolder extends Component {
             this.context.handleAddFolder(folder);
             this.props.history.push('/');
         })
-        .catch(error => this.setState({ error }))
+        .catch(error => {
+            this.setState({ error: error.message })
+          })
     }
-    
-    
+      
     render() {
-        const error = this.state.error 
-          ? <div className="error">{this.state.error}</div>
+        const  error = this.state.error 
+          ? <div className="error">Something went wrong: {this.state.error}</div>
           : "";
         
         return(

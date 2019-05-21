@@ -3,7 +3,6 @@ import { Route, Link,  } from 'react-router-dom';
 import Folder from './folder/folder';
 import Note from './note/note';
 import Content from './content/content';
-import STORE from './dummy-store';
 import './App.css';
 import NoteContext from './NoteContext'
 import AddFolder from './AddFolder/AddFolder';

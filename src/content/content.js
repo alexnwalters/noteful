@@ -12,6 +12,7 @@ class Content extends Component {
 
         return (
             <div className='content'>
+                <h2>{content.name}</h2>
                 <p>{content.content}</p>
                 <button
                     onClick={() => {
