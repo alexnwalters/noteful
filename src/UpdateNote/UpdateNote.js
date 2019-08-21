@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import NoteContext from '../NoteContext'
 
-class AddNote extends Component {
+class UpdateNote extends Component {
 
     static contextType = NoteContext
 
@@ -15,37 +15,46 @@ class AddNote extends Component {
         }
     }
 
-    addName(name) {
+    handleChangeName = e => {
         this.setState({
-            name
+            name: e.target.value
         });
     }
 
-    addContent(content) {
+    handleChangeContent = e => {
         this.setState({
-            content
+            content: e.target.value
         });
     }
 
-    addFolderId(folder_id) {
+    handleChangeFolder = e => {
         this.setState({
-            folder_id
+            folder_id: e.target.value
         });
     }
 
-    handleSubmit = (e) => {
+    resetFields = (newFields) => {
+        this.setState({
+          name: newFields.name || '',
+          content: newFields.content || '',
+          folder_id: newFields.folder_id || '',
+        })
+      }
+
+    handleSubmit = e => {
         e.preventDefault();
 
+        const noteId = this.props.match.params.noteId
         const  { name, content, folder_id } = this.state;
-        const note = {
+        const newNote = {
             name, 
             content, 
             folder_id, 
         };
 
-        fetch('http://localhost:8000/api/notes', {
-            method: 'POST',
-            body: JSON.stringify(note),
+        fetch(`http://localhost:8000/api/notes/${noteId}`, {
+            method: 'PATCH',
+            body: JSON.stringify(newNote),
             headers: {
                 'content-type': 'application/json'
             }
@@ -54,40 +63,64 @@ class AddNote extends Component {
             if(!res.ok) {
                 throw new Error(res.status)
             }
-            return res.json()
+            // return res.json()
         })
-        .then(data => {
-            this.setState({
-                name: '',
-                content: '',
-                folder_id: '',
-            });
-            this.context.handleAddNote(data);
+        .then(() => {
+            this.resetFields(newNote)
+            this.context.updateNote(newNote);
             this.props.history.push('/');
         })
         .catch(error => this.setState({ error: error.message }))
     }
+
+    componentDidMount() {
+        const noteId = this.props.match.params.noteId
+
+        fetch(`http://localhost:8000/api/notes/${noteId}`, {
+            method: 'GET',
+            header: {
+                'content-type': 'application/json'
+            }
+        })
+        .then(res => {
+            if(!res.ok)
+                return res.json().then(error => Promise.reject(error))
+            return res.json()
+        })
+        .then(resData => {
+            this.setState({
+                name: resData.name,
+                content: resData.content,
+                folder_id: resData.folder_id
+            })
+        })
+        .catch(error => {
+            this.setState({ error })
+        })
+    }
+    
     
     
     render() {
+        const { name, content, folder_id } = this.state
         const folders = this.context.folders;
         const error = this.state.error 
           ? <div className="error">Something went wrong: {this.state.error}</div>
           : "";
-        
+
         return(
             <div>
-                <h2>Create a Note</h2>
+                <h2>Update a Note</h2>
                 {error}
-                <form className='addnote__form' onSubmit={e => this.handleSubmit(e)}>
+                <form className='addnote__form' onSubmit={this.handleSubmit}>
                     <label htmlFor='name'>Name:</label>
                         <div>
                             <input
                                 type='text'
                                 name='name'
                                 id='name'
-                                value={this.state.name}
-                                onChange={e => this.addName(e.target.value)} 
+                                value={ name }
+                                onChange={this.handleChangeName} 
                                 required/>
                         </div>
                     <label htmlFor='content'>Content:</label>
@@ -95,13 +128,13 @@ class AddNote extends Component {
                             <textarea
                                 name='content'
                                 id='content'
-                                value={this.state.content}
-                                onChange={e => this.addContent(e.target.value)}
+                                value={ content }
+                                onChange={this.handleChangeContent}
                                 required/>
                         </div>
                     <label htmlFor='folder'>Folder:</label>
                         <div>
-                            <select value={this.state.folder_id} onChange={e => this.addFolderId(e.target.value)} required>
+                            <select value={ folder_id } onChange={this.handleChangeFolder} required>
                                 <option disabled='' value=''>...</option>
                                 {folders.map(folder =>
                                     <option
@@ -114,7 +147,7 @@ class AddNote extends Component {
                             </select>
                             </div>
                     <div className='addnote__buttons'>
-                        <button type='submit'>Add Note</button>
+                        <button type='submit'>Update Note</button>
                     </div>
                 </form>
             </div>
@@ -122,4 +155,4 @@ class AddNote extends Component {
     }
 }
 
-export default AddNote
+export default UpdateNote

@@ -14,7 +14,7 @@ class Folder extends Component{
                 <ul className='folders'>
                     {folders.map(folder => 
                         <li key={folder.id}>
-                            <NavLink to={`/folder/${folder.id}`}>
+                            <NavLink to={`/folders/${folder.id}`}>
                                 {folder.name}
                             </NavLink>
                         </li>

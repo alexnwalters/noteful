@@ -4,24 +4,35 @@ import NoteContext from '../NoteContext'
 import './note.css';
 
 class Note extends Component {
+    static defaultProps = {
+        match: {
+            path: '',
+        }
+    }
+
 
     static contextType = NoteContext;
 
     render() {
         const notes = this.props.match.path === '/'
                 ? this.context.notes
-                : this.context.notes.filter(note => note.folderId === this.props.match.params.folderId)
+                : this.context.notes.filter(note => note.folder_id == this.props.match.params.folderId)
 
         return (
             <div>
                 <ul className='notes'>
                     {notes.map(note =>
                         <li key={note.id}>
-                            <Link to={`/note/${note.id}`}>
+                            <Link to={`/notes/${note.id}`}>
                                 {note.name}
                             </Link>
                             <div className='note-details'>
-                                <p>Modified: {note.modified}</p>
+                                <p>Modified: {note.date_modified}</p>
+                                <button>
+                                    <Link to={`/update/${note.id}`}>
+                                        Update
+                                    </Link>
+                                </button>
                                 <button
                                     onClick={() => {
                                         this.context.deleteRequest(
@@ -30,7 +41,7 @@ class Note extends Component {
                                         )
                                     }}
                                     >
-                                    Delete Note
+                                    Delete
                                 </button>
                             </div>
                         </li>

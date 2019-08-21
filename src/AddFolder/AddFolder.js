@@ -29,7 +29,7 @@ class AddFolder extends Component {
             name
         };
         
-        fetch('http://localhost:9090/folders', {
+        fetch('http://localhost:8000/api/folders', {
             method: 'POST',
             body: JSON.stringify(folder),
             headers: {
@@ -47,7 +47,7 @@ class AddFolder extends Component {
                 id: '',
                 name: '',
             });
-            this.context.handleAddFolder(folder);
+            this.context.handleAddFolder(data);
             this.props.history.push('/');
         })
         .catch(error => {

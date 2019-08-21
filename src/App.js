@@ -10,6 +10,7 @@ import FolderName from './foldername/foldername';
 import Back from './Back/Back'
 import AddNote from './AddNote/AddNote'
 import NotefulError from './NotefulError/NotefulError';
+import UpdateNote from './UpdateNote/UpdateNote'
 
 class App extends Component {
   state = {
@@ -33,7 +34,7 @@ class App extends Component {
   }
 
   deleteRequest = (noteId, callback ) => {
-    fetch(`http://localhost:9090/notes/${noteId}`, {
+    fetch(`http://localhost:8000/api/notes/${noteId}`, {
       method: 'DELETE',
       headers: {
         'content-type': 'application/json'
@@ -41,11 +42,9 @@ class App extends Component {
     })
     .then(res =>{
       if(!res.ok) {
-        return res.json().then(error => {
-          throw error
-        })
+        return res.json().then(error =>  Promise.reject(error))
       }
-      return res.json()
+     return res.json()
     })
     .then(data => {
       callback(noteId)
@@ -78,7 +77,7 @@ class App extends Component {
   
 
   componentDidMount () {
-    fetch('http://localhost:9090/folders', {
+    fetch('http://localhost:8000/api/folders', {
       method: 'GET',
       headers: {
         'content-type': 'application/json'
@@ -93,7 +92,7 @@ class App extends Component {
     .then(this.setfolders)
     .catch(error => this.setState({ error }))
 
-    fetch('http://localhost:9090/notes', {
+    fetch('http://localhost:8000/api/notes', {
       method: 'GET',
       headers: {
         'content-type': 'application/json'
@@ -109,6 +108,14 @@ class App extends Component {
     .catch(error => this.setState({ error }))
   }
 
+  updateNote = updateNote => {
+    this.setState({
+      notes: this.state.notes.map(note =>
+        (note.id !== updateNote.id) ? note : updateNote
+      )
+    })
+  }
+
   render() {
     const contextValue = {
       folders: this.state.folders,
@@ -116,7 +123,8 @@ class App extends Component {
       deleteRequest: this.deleteRequest,
       deleteNote: this.deleteNote,
       handleAddFolder: this.handleAddFolder,
-      handleAddNote: this.handleAddNote
+      handleAddNote: this.handleAddNote,
+      updateNote: this.updateNote
     }
 
     return (
@@ -136,19 +144,15 @@ class App extends Component {
                 component={Folder}
               />
               <Route
-                path='/folder'
+                path='/folders'
                 component={Folder}
               />
               <Route
-                path='/note/:noteId'
+                path='/notes/:noteId'
                 component={FolderName}
               />
               <Route
-                path='/addfolder'
-                component={Back}
-              />
-              <Route
-                path='/addnote'
+                path = { ['/addfolder', '/addnote', '/update'] }
                 component={Back}
               />
             </nav>
@@ -160,12 +164,12 @@ class App extends Component {
                 component={Note}
               />
               <Route
-                  path='/folder/:folderId'
-                  component={Note}
+                path='/folders/:folderId'
+                component={Note}
               />
               <Route
-                  path='/note/:noteId'
-                  component={Content}
+                path='/notes/:noteId'
+                component={Content}
               />
               <Route
                 path='/addfolder'
@@ -174,6 +178,10 @@ class App extends Component {
               <Route
                 path='/addnote'
                 component={AddNote}
+              />
+              <Route
+                path='/update/:noteId'
+                component={UpdateNote}
               />
             </main>
           </NotefulError>
