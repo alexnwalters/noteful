@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import NoteContext from '../NoteContext'
+import config from '../config'
 
 class AddNote extends Component {
 
@@ -43,11 +44,12 @@ class AddNote extends Component {
             folder_id, 
         };
 
-        fetch('http://localhost:8000/api/notes', {
+        fetch(config.API_ENDPOINT + `/api/notes`, {
             method: 'POST',
             body: JSON.stringify(note),
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                'authorization': `${config.API_KEY}`
             }
         })
         .then(res =>{

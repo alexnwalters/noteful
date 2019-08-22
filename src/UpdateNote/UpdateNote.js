@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import NoteContext from '../NoteContext'
+import config from '../config'
 
 class UpdateNote extends Component {
 
@@ -52,11 +53,12 @@ class UpdateNote extends Component {
             folder_id, 
         };
 
-        fetch(`http://localhost:8000/api/notes/${noteId}`, {
+        fetch(config.API_ENDPOINT + `/api/notes/${noteId}`, {
             method: 'PATCH',
             body: JSON.stringify(newNote),
             headers: {
-                'content-type': 'application/json'
+                'content-type': 'application/json',
+                'authorization': `${config.API_KEY}`
             }
         })
         .then(res =>{
@@ -74,11 +76,12 @@ class UpdateNote extends Component {
 
     componentDidMount() {
         const noteId = this.props.match.params.noteId
-
-        fetch(`http://localhost:8000/api/notes/${noteId}`, {
+        
+        fetch(config.API_ENDPOINT + `/api/notes/${noteId}`, {
             method: 'GET',
-            header: {
-                'content-type': 'application/json'
+            headers: {
+                'content-type': 'application/json',
+                'authorization': `${config.API_KEY}`
             }
         })
         .then(res => {
@@ -94,7 +97,7 @@ class UpdateNote extends Component {
             })
         })
         .catch(error => {
-            this.setState({ error })
+            this.setState({ error: error.message })
         })
     }
     

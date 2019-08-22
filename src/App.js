@@ -1,9 +1,10 @@
 import React, { Component } from 'react';
-import { Route, Link,  } from 'react-router-dom';
+import { Route, Link } from 'react-router-dom';
+import './App.css';
+import config from './config'
 import Folder from './folder/folder';
 import Note from './note/note';
 import Content from './content/content';
-import './App.css';
 import NoteContext from './NoteContext'
 import AddFolder from './AddFolder/AddFolder';
 import FolderName from './foldername/foldername';
@@ -34,10 +35,11 @@ class App extends Component {
   }
 
   deleteRequest = (noteId, callback ) => {
-    fetch(`http://localhost:8000/api/notes/${noteId}`, {
+    fetch(config.API_ENDPOINT + `/api/notes/${noteId}`, {
       method: 'DELETE',
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        'authorization': `${config.API_KEY}`
       }
     })
     .then(data => {
@@ -71,10 +73,11 @@ class App extends Component {
   
 
   componentDidMount () {
-    fetch('http://localhost:8000/api/folders', {
+    fetch(config.API_ENDPOINT + `/api/folders`, {
       method: 'GET',
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        'authorization': `${config.API_KEY}`
       }
     })
     .then(res =>{
@@ -86,10 +89,29 @@ class App extends Component {
     .then(this.setfolders)
     .catch(error => this.setState({ error }))
 
-    fetch('http://localhost:8000/api/notes', {
+    fetch(config.API_ENDPOINT + `/api/notes`, {
       method: 'GET',
       headers: {
-        'content-type': 'application/json'
+        'content-type': 'application/json',
+        'authorization': `${config.API_KEY}`
+      }
+    })
+    .then(res =>{
+      if(!res.ok) {
+        throw new Error(res.status)
+      }
+      return res.json()
+    })
+    .then(this.setnotes)
+    .catch(error => this.setState({ error }))
+  }
+
+  componentDidUpdate () {
+    fetch(config.API_ENDPOINT + `/api/notes`, {
+      method: 'GET',
+      headers: {
+        'content-type': 'application/json',
+        'authorization': `${config.API_KEY}`
       }
     })
     .then(res =>{
