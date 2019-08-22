@@ -10,13 +10,13 @@ class Content extends Component {
 
     render() {
         const content = this.context.notes.find(note => note.id == this.props.match.params.noteId);
-
+        console.log(content)
         return (
             <div className='content'>
                 <h2>{content.name}</h2>
                 <p>{content.content}</p>
                 <button>
-                    <Link to={`/notes/${content.id}`}>
+                    <Link to={`/update/${content.id}`}>
                         Update
                     </Link>
                 </button>

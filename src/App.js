@@ -40,12 +40,6 @@ class App extends Component {
         'content-type': 'application/json'
       }
     })
-    .then(res =>{
-      if(!res.ok) {
-        return res.json().then(error =>  Promise.reject(error))
-      }
-     return res.json()
-    })
     .then(data => {
       callback(noteId)
     })

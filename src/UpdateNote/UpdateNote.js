@@ -63,7 +63,6 @@ class UpdateNote extends Component {
             if(!res.ok) {
                 throw new Error(res.status)
             }
-            // return res.json()
         })
         .then(() => {
             this.resetFields(newNote)
@@ -110,7 +109,7 @@ class UpdateNote extends Component {
 
         return(
             <div>
-                <h2>Update a Note</h2>
+                <h2>Update Note</h2>
                 {error}
                 <form className='addnote__form' onSubmit={this.handleSubmit}>
                     <label htmlFor='name'>Name:</label>
