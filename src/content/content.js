@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './content.css';
+import './Content.css';
 import NoteContext from '../NoteContext';
 import { Link } from 'react-router-dom';
 
@@ -10,7 +10,7 @@ class Content extends Component {
 
     render() {
         const content = this.context.notes.find(note => note.id == this.props.match.params.noteId);
-        console.log(content)
+        
         return (
             <div className='content'>
                 <h2>{content.name}</h2>

@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { NavLink, withRouter, Link } from 'react-router-dom';
 import NoteContext from '../NoteContext'
-import './folder.css'
+import './Folder.css'
 
 class Folder extends Component{
 

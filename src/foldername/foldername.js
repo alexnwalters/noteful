@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import NoteContext from '../NoteContext'
-import './foldername.css';
 
 class FolderName extends Component {
    

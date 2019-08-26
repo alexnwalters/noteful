@@ -2,12 +2,12 @@ import React, { Component } from 'react';
 import { Route, Link } from 'react-router-dom';
 import './App.css';
 import config from './config'
-import Folder from './folder/folder';
-import Note from './note/note';
-import Content from './content/content';
+import Folder from './Folder/Folder';
+import Note from './Note/Note';
+import Content from './Content/Content';
 import NoteContext from './NoteContext'
 import AddFolder from './AddFolder/AddFolder';
-import FolderName from './foldername/foldername';
+import FolderName from './FolderName/FolderName';
 import Back from './Back/Back'
 import AddNote from './AddNote/AddNote'
 import NotefulError from './NotefulError/NotefulError';
