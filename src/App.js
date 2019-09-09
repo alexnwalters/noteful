@@ -106,23 +106,23 @@ class App extends Component {
     .catch(error => this.setState({ error }))
   }
 
-  componentDidUpdate () {
-    fetch(config.API_ENDPOINT + `/api/notes`, {
-      method: 'GET',
-      headers: {
-        'content-type': 'application/json',
-        'authorization': `${config.API_KEY}`
-      }
-    })
-    .then(res =>{
-      if(!res.ok) {
-        throw new Error(res.status)
-      }
-      return res.json()
-    })
-    .then(this.setnotes)
-    .catch(error => this.setState({ error }))
-  }
+  // componentDidUpdate () {
+  //   fetch(config.API_ENDPOINT + `/api/notes`, {
+  //     method: 'GET',
+  //     headers: {
+  //       'content-type': 'application/json',
+  //       'authorization': `${config.API_KEY}`
+  //     }
+  //   })
+  //   .then(res =>{
+  //     if(!res.ok) {
+  //       throw new Error(res.status)
+  //     }
+  //     return res.json()
+  //   })
+  //   .then(this.setnotes)
+  //   .catch(error => this.setState({ error }))
+  // }
 
   updateNote = updateNote => {
     this.setState({
